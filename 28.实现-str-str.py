@@ -45,8 +45,58 @@ class Solution:
                     return i-j
         # haystack中的元素都走完了，needle里元素还没匹配完
         return -1
-            
-s = Solution().strStr( "ababcabcacbab", "abcac")         
-print(s)
+
+
+
+# 2021-04-20 每日一题打卡
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        n1 = len(haystack)
+        n2 = len(needle)
+        def get_next(needle):
+            n2 = len(needle)
+            nxt = [0] * n2
+            # nxt[0] = 1
+            i = 0
+            for j in range(1, n2):
+                while i > 0 and needle[i] != needle[j]:
+                    i = nxt[i-1] # 注意这里不是i-=1
+                if needle[i] == needle[j]:
+                    i += 1
+                nxt[j] = i
+            return nxt
+        nxt = get_next(needle)
+        print(nxt)
+        i = 0
+        j = 0
+        while i < n1:
+            if j == n2:
+                return i - n2
+            if haystack[i] == needle[j]:
+                i += 1
+                j += 1
+            else:
+                if j > 0:
+                    j = nxt[j-1]
+                else:
+                    i += 1
+        if j < n2:
+            return -1
+        else:
+            return i - n2
+
+""" 虽然过程中错了几个地方，但还是没有花很久做出来了
+Accepted
+79/79 cases passed (52 ms)
+Your runtime beats 29.17 % of python3 submissions
+Your memory usage beats 5.08 % of python3 submissions (16.5 MB)
+"""
+# s = Solution().strStr( "ababcabcacbab", "abcac")         
+# haystack = "hello"; needle = "ll"
+# haystack = "adcadcaddcadde"; needle = "adcadde"
+# s = Solution().strStr(haystack, needle)
+# print(s)
+
+
 # @lc code=end
 
