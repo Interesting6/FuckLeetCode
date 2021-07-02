@@ -12,7 +12,16 @@
 """
 class Solution:
     def numTrees(self, n: int) -> int:
+        dp = [0] * (n+1)
+        dp[0] = 1 # 无节点时，因为后面设计到乘法，故设为1
+        dp[1] = 1
+        for i in range(2, n+1): # 总共i个节点时
+            for k in range(1, i+1): # k为根节点的标号
+                dp[i] += dp[k-1]*dp[i-k] # 左边的节点数能构成的树数*右边节点数能构成的树数
 
-        return 
+        return dp[n]
+
+s = Solution().numTrees(3)
+print(s)
 # @lc code=end
 

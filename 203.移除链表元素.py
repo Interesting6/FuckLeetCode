@@ -38,26 +38,61 @@ Your memory usage beats 58.59 % of python3 submissions (17.8 MB)
 
 """从上面可以知道，若头结点元素出现时，处理逻辑跟后面的节点的处理逻辑不同
 这个时候，引入一个虚拟头结点会比较方便"""
+# class Solution:
+#     def removeElements(self, head, val):
+#         if not head:
+#             return head
+#         dummyHead = ListNode(0, head)
+#         cur = dummyHead
+#         while cur.next:  # 注意这里的逻辑，是判断下一个节点
+#             if cur.next.val == val:
+#                 cur.next = cur.next.next # 连接到下一个节点
+#                 # 当删除一个节点时，不需要移到下一个节点，由于while里会判断下一个节点
+#             else:
+#                 cur = cur.next
+#         head = dummyHead.next
+#         return head
+# """
+# Accepted
+# 66/66 cases passed (76 ms)
+# Your runtime beats 40.93 % of python3 submissions
+# Your memory usage beats 64.78 % of python3 submissions (17.8 MB)
+# """
+
+from typing import List
+
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 class Solution:
-    def removeElements(self, head, val):
-        if not head:
-            return head
-        dummyHead = ListNode(0, head)
-        cur = dummyHead
-        while cur.next:  # 注意这里的逻辑，是判断下一个节点
-            if cur.next.val == val:
-                cur.next = cur.next.next # 连接到下一个节点
-                # 当删除一个节点时，不需要移到下一个节点，由于while里会判断下一个节点
-            else:
+    def removeElements(self, head: ListNode, val: int) -> ListNode:
+        dummy_head = ListNode(-1)
+        dummy_head.next = head
+        cur = head
+        pre = dummy_head
+        while cur:
+            if cur.val == val:
+                pre.next = cur.next
                 cur = cur.next
-        head = dummyHead.next
-        return head
-"""
-Accepted
-66/66 cases passed (76 ms)
-Your runtime beats 40.93 % of python3 submissions
-Your memory usage beats 64.78 % of python3 submissions (17.8 MB)
-"""
+            else:
+                pre = cur
+                cur = cur.next
+        return dummy_head.next
+
+
+# heads = [1,2,6,3,4,5,6]; val = 6
+
+# hd = ListNode(1)
+# hds = hd
+# for i in range(1, len(heads)):
+#     hd.next = ListNode(heads[i])
+#     hd = hd.next
+# s = Solution().removeElements(hds, val)
+# while s:
+#     print(s.val)
+#     s = s.next
 
 # @lc code=end
 

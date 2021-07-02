@@ -51,17 +51,46 @@ f(i)：以第i个数为结尾的连续子数组的最大和，是局部的一个
 
 
 # 21-04-06 第三次做，还是不会，只是瞎猜得到结果。。
+# class Solution:
+#     def maxSubArray(self, nums):
+#         n = len(nums)
+#         dp = [0] * n
+#         res = float("-inf")
+#         for i in range(n):
+#             dp[i] = max(dp[i-1]+nums[i], nums[i])
+#             res = max(dp[i], res)
+#         return res
+
+# 21-06-03 做前缀和的时候来做
 class Solution:
     def maxSubArray(self, nums):
-        n = len(nums)
-        dp = [0] * n
-        res = float("-inf")
-        for i in range(n):
-            dp[i] = max(dp[i-1]+nums[i], nums[i])
-            res = max(dp[i], res)
+        length = len(nums)
+        # dp = [0]* length
+        # res = float("-inf")
+        # for i, n in enumerate(nums):
+        #     dp[i] = max(nums[i], dp[i-1]+nums[i])
+        #     res = max(res, dp[i])
+        # return res
+        preSum = 0
+        min_num = 0
+        res = nums[0]
+        for i in range(length):
+            preSum += nums[i]
+            res = max(res, preSum - min_num)
+            if preSum < min_num:
+                min_num = preSum
         return res
 
+
 # s = Solution().maxSubArray([-2,1,-3,4,-1,2,1,-5,4])
+# s = Solution().maxSubArray([5,4,-1, 7, 8])
 # print(s)
+"""
+Accepted 前缀和时间复杂度牛逼
+203/203 cases passed (28 ms)
+Your runtime beats 99.98 % of python3 submissions
+Your memory usage beats 60.73 % of python3 submissions (15.3 MB)
+"""
+
 # @lc code=end
 

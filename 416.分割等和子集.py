@@ -19,8 +19,8 @@ class Solution:
             return False
         weight = sum_ // 2 # 等和子集的和必然是总和一半
         dp = [[0]*(weight+1) for _ in range(n+1)]
-        for i in range(1, n+1):
-            for w in range(1, weight+1):
+        for i in range(1, n+1): # 第i-1件物品
+            for w in range(1, weight+1): # 背包的当前容量
                 tmp = w - nums[i-1]
                 if tmp < 0: # 放不下
                     dp[i][w] = dp[i-1][w]
